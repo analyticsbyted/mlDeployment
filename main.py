@@ -20,8 +20,8 @@ with open('language_labels.json', 'r') as f:
 
 @app.post("/")
 async def detection_endpoint(item: LanguageItem):
-    df = pd.DataFrame([item.dict().values()], columns=item.dict().keys())
-    yhat = model.predict(df)
+    text = item.text
+    yhat = model.predict([text])
     predicted_label = yhat[0]
     predicted_language = language_labels[predicted_label]
     return {"predicted language": predicted_language}
